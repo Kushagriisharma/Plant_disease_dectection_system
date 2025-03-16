@@ -5,5 +5,5 @@ Dataset is taken from Kaggle: https://www.kaggle.com/datasets/vipoooool/new-plan
 I have added test images in a dir, check that out and also test it with your model, if not download my model in the google drive, which I have shared the link here at the top.
 
 To run streamlit, kindly go to the directory where you have created app.py, use the command
-
+https://github.com/Kushagriisharma/Plant_disease_dectection_system/blob/main/app.py
 
