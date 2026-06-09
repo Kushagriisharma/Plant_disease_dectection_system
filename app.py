@@ -2,7 +2,6 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 import os
-import cv2
 from PIL import Image
 
 MODEL_PATH = 'plant_disease_cnn_model.keras'
@@ -23,14 +22,13 @@ if not os.path.exists(MODEL_PATH):
 # Load and preprocess the image
 def model_predict(image_path):
     model = tf.keras.models.load_model(MODEL_PATH)
-    img = cv2.imread(image_path)
-    H, W, C = 224, 224, 3
-    img = cv2.resize(img, (H, W))
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+    # Preprocess using Pillow instead of cv2 to avoid Linux shared library errors
+    img = Image.open(image_path).convert('RGB')
+    img = img.resize((224, 224))
     img = np.array(img)
-    img = img.astype('float32')
-    img = img / 255.0
-    img = img.reshape(1, H, W, C)
+    img = img.astype('float32') / 255.0
+    img = np.expand_dims(img, axis=0)
 
     prediction = np.argmax(model.predict(img), axis=-1)[0]
     return prediction
